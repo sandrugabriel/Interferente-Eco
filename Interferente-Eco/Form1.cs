@@ -1,4 +1,5 @@
-﻿using Interferente_Eco.Panels;
+﻿using Interferente_Eco.Models;
+using Interferente_Eco.Panels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +17,28 @@ namespace Interferente_Eco
         public Form1()
         {
             InitializeComponent();
+            Utilizator utilizator = new Utilizator("1 Ioana eco");
+            Image image = Image.FromFile(Application.StartupPath+ @"\Background\Back2.jpg");
+            this.Controls.Add(new PnlInterferente(this,utilizator,image));
 
-            this.Controls.Add(new PnlStart(this));
+        }
 
+        public void removePnl(string pnl)
+        {
+
+            Control control = null;
+
+            foreach (Control c in this.Controls)
+            {
+
+                if (c.Name.Equals(pnl))
+                {
+                    control = c;
+                }
+
+            }
+
+            this.Controls.Remove(control);
         }
     }
 }

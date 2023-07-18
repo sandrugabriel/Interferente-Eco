@@ -170,8 +170,9 @@ namespace Interferente_Eco.Panels
                 {
 
                     PictureBox pictureBox = sender as PictureBox;
-
-
+                    Utilizator utilizator = controllerUtilizatori.getUtilizator(comboUtilizator.Text, txtParola.Text);
+                    this.form.Controls.Add(new PnlInterferente(form, utilizator, pictureBox.Image));
+                    this.form.removePnl("PnlLogare");
                 }
                 else
                 {
