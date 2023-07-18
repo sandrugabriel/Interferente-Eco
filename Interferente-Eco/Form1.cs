@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Interferente_Eco.Panels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,9 @@ namespace Interferente_Eco
         public Form1()
         {
             InitializeComponent();
+
+            this.Controls.Add(new PnlStart(this));
+
         }
     }
 }

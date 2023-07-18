@@ -40,5 +40,22 @@ namespace Interferente_Eco.Controllers
             streamReader.Close();
         }
 
+        public List<Utilizator> getUtilizatori()
+        {
+            return utilizatori;
+        }
+
+        public bool verificare(string name, string parola)
+        {
+
+            for(int i=0;i<utilizatori.Count;i++)
+            {
+                if (name.Equals(utilizatori[i].Name) && parola.Equals(utilizatori[i].Password)) return true;
+            }
+
+            return false;
+        }
+
+
     }
 }
