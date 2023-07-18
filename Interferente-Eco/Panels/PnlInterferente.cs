@@ -34,6 +34,9 @@ namespace Interferente_Eco.Panels
         private int index;
 
         Image imgDef;
+        private int ctSticla;
+        private int ctPlastic;
+        private int ctHartie;
 
         public PnlInterferente(Form1 form1, Utilizator utilizator1, Image image1)
         {
@@ -45,6 +48,9 @@ namespace Interferente_Eco.Panels
             this.form.Size = new System.Drawing.Size(1113, 828);
             this.form.MinimumSize = new System.Drawing.Size(1113, 828);
             this.form.MaximumSize = new System.Drawing.Size(1113, 828);
+            ctSticla = 0;
+            ctPlastic = 0;
+            ctHartie = 0;
             index = 1;
             //PnlInterferente
             this.Size = new System.Drawing.Size(1113, 828);
@@ -107,13 +113,15 @@ namespace Interferente_Eco.Panels
 
             // lblDeflector
             this.lblDeflector.AutoSize = true;
-            this.lblDeflector.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 12F, System.Drawing.FontStyle.Regular);
+            this.lblDeflector.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 15F, System.Drawing.FontStyle.Regular);
             this.lblDeflector.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblDeflector.Location = new System.Drawing.Point(35, 93);
+            this.lblDeflector.Location = new System.Drawing.Point(15, 93);
             this.lblDeflector.Name = "lblDeflector";
             this.lblDeflector.Size = new System.Drawing.Size(172, 27);
             this.lblDeflector.Text = "Adauga Deflector";
-             
+            this.lblDeflector.Click += new EventHandler(lblDeflector_Click); 
+            this.lblDeflector.BackColor = System.Drawing.Color.SaddleBrown;
+
             // btnRoteste
             this.btnRoteste.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnRoteste.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 12F, System.Drawing.FontStyle.Regular);
@@ -140,7 +148,7 @@ namespace Interferente_Eco.Panels
             this.lblSticla.Location = new System.Drawing.Point(15, 450);
             this.lblSticla.Name = "lblSticla";
             this.lblSticla.Size = new System.Drawing.Size(69, 27);
-            this.lblSticla.Text = "Sticla: ";
+            this.lblSticla.Text = "Sticla: " + ctSticla.ToString();
 
             // lblHartie
             this.lblHartie.AutoSize = true;
@@ -149,7 +157,7 @@ namespace Interferente_Eco.Panels
             this.lblHartie.Location = new System.Drawing.Point(15, 490);
             this.lblHartie.Name = "lblHartie";
             this.lblHartie.Size = new System.Drawing.Size(71, 27);
-            this.lblHartie.Text = "Hartie:";
+            this.lblHartie.Text = "Hartie: " + ctHartie.ToString();
              
             // lblPlastic
             this.lblPlastic.AutoSize = true;
@@ -158,7 +166,7 @@ namespace Interferente_Eco.Panels
             this.lblPlastic.Location = new System.Drawing.Point(15, 530);
             this.lblPlastic.Name = "lblPlastic";
             this.lblPlastic.Size = new System.Drawing.Size(72, 27);
-            this.lblPlastic.Text = "Plastic:";
+            this.lblPlastic.Text = "Plastic: " + ctPlastic.ToString();
 
             // btnStart
             this.btnStart.BackColor = System.Drawing.Color.SaddleBrown;
@@ -195,6 +203,7 @@ namespace Interferente_Eco.Panels
             this.pctOceanul.SizeMode = PictureBoxSizeMode.StretchImage;
             this.pctOceanul.BackColor = Color.Transparent;
             this.pctOceanul.Paint += pctOceanul_Paint;
+            this.pctOceanul.MouseDown += pctOceanul_MouseDown;
 
         }
 
@@ -246,6 +255,40 @@ namespace Interferente_Eco.Panels
 
         }
 
+        private void lblDeflector_Click(object sender, EventArgs e)
+        {
+
+            this.pctBackground.Enabled = false;
+
+        }
+
+        private void pctOceanul_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+
+                if (pctOceanul.Image != null)
+                {
+                    int cellSize = 60;
+
+                    int cellX = e.X / cellSize;
+                    int cellY = e.Y / cellSize;
+
+                    Rectangle cellRect = new Rectangle(cellX * cellSize, cellY * cellSize, cellSize, cellSize);
+
+
+                    PictureBox cellPictureBox = new PictureBox();
+                    pctOceanul.Controls.Add(cellPictureBox);
+                    cellPictureBox.Image = imgDef;
+                    cellPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    cellPictureBox.Size = cellRect.Size;
+                    cellPictureBox.Location = cellRect.Location;
+
+                    this.pctBackground.Enabled = true;
+
+                }
+            }
+        }
 
 
 
