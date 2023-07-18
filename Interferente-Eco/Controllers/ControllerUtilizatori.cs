@@ -56,6 +56,17 @@ namespace Interferente_Eco.Controllers
             return false;
         }
 
+        public Utilizator getUtilizator(string name,string parola) {
+
+
+            for (int i = 0; i < utilizatori.Count; i++)
+            {
+                if (name.Equals(utilizatori[i].Name) && parola.Equals(utilizatori[i].Password)) return utilizatori[i];
+            }
+
+            return null;
+
+        }
 
     }
 }

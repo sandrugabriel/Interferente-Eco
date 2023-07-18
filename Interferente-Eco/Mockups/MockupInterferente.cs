@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Interferente_Eco.Mockups
 {
-    public partial class MockupLogare : Form
+    public partial class MockupInterferente : Form
     {
-        public MockupLogare()
+        public MockupInterferente()
         {
             InitializeComponent();
         }
