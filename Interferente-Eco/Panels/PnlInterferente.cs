@@ -102,6 +102,8 @@ namespace Interferente_Eco.Panels
             this.chkLini.Name = "chkLini";
             this.chkLini.Size = new System.Drawing.Size(209, 31);
             this.chkLini.Text = "Afiseaza lini de grid";
+            this.chkLini.Checked = true;
+            this.chkLini.CheckedChanged += new EventHandler(chkLini_CheckedChanged);
 
             // lblDeflector
             this.lblDeflector.AutoSize = true;
@@ -191,7 +193,52 @@ namespace Interferente_Eco.Panels
             this.pctOceanul.Image = image;
             this.pctOceanul.SizeMode = PictureBoxSizeMode.StretchImage;
             this.pctOceanul.BackColor = Color.Transparent;
+            this.pctOceanul.Paint += pctOceanul_Paint;
+
         }
+
+        private void chkLini_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (chkLini.Checked)
+            {
+                this.pctOceanul.Paint += pctOceanul_Paint;
+            }
+            else
+            {
+                pctOceanul.Paint -= pctOceanul_Paint; 
+                pctOceanul.Refresh();
+            }
+        }
+
+        private void pctOceanul_Paint(object sender, PaintEventArgs e)
+        {
+
+                PictureBox pictureBox = (PictureBox)sender;
+                Graphics graphics = e.Graphics;
+
+                Pen gridPen = new Pen(Color.White, 2);
+
+                int cellSize = 60;
+
+                for (int x = 0; x < pictureBox.Width; x += cellSize)
+                {
+                    graphics.DrawLine(gridPen, x, 0, x, pictureBox.Height);
+                }
+
+                for (int y = 0; y < pictureBox.Height; y += cellSize)
+                {
+                    graphics.DrawLine(gridPen, 0, y, pictureBox.Width, y);
+                }
+
+           
+           
+        }
+
+
+
+
+
 
 
     }
