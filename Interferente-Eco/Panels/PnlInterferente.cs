@@ -122,6 +122,7 @@ namespace Interferente_Eco.Panels
             this.btnRoteste.Name = "btnRoteste";
             this.btnRoteste.Size = new System.Drawing.Size(179, 63);
             this.btnRoteste.Text = "Roteste Deflector";
+            this.btnRoteste.Click += new EventHandler(btnRoteste_Click);
 
             // btnCuratat
             this.btnCuratat.BackColor = System.Drawing.Color.SaddleBrown;
@@ -235,7 +236,15 @@ namespace Interferente_Eco.Panels
            
         }
 
+        private void btnRoteste_Click(object sender, EventArgs e)
+        {
 
+            index++;
+            if (index == 5) index = 1;
+            this.pctDef.Image = Image.FromFile(Application.StartupPath + @"\Deflector\" + index.ToString() + ".png");
+            this.imgDef = pctDef.Image;
+
+        }
 
 
 
