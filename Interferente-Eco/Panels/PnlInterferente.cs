@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -145,6 +146,7 @@ namespace Interferente_Eco.Panels
             this.btnCuratat.Name = "btnCuratat";
             this.btnCuratat.Size = new System.Drawing.Size(179, 63);
             this.btnCuratat.Text = "Curata tot";
+            this.btnCuratat.Click += new EventHandler(btnCuratat_Click);
 
             // lblSticla
             this.lblSticla.AutoSize = true;
@@ -299,6 +301,7 @@ namespace Interferente_Eco.Panels
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            this.btnStart.Enabled = false;
             string fisier = Application.StartupPath + @"\data\Harta1.txt";
             string[] linii = File.ReadAllLines(fisier);
 
@@ -334,6 +337,13 @@ namespace Interferente_Eco.Panels
 
             this.form.removePnl("PnlInterferente");
             this.form.Controls.Add(new PnlInterferente(form, utilizator, image));
+
+        }
+
+        private void btnCuratat_Click(object sender, EventArgs e)
+        {
+            this.btnStart.Enabled = true;
+            this.pctOceanul.Controls.Clear();
 
         }
 
