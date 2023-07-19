@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interferente_Eco.Models
 {
-    internal class Utilizator
+    public class Utilizator
     {
 
         private int _id;
