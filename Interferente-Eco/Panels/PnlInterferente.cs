@@ -253,6 +253,7 @@ namespace Interferente_Eco.Panels
             this.btnSalv.Name = "btnSalv";
             this.btnSalv.Size = new System.Drawing.Size(179, 63);
             this.btnSalv.Text = "Salveaza jpg";
+            this.btnSalv.Click += new EventHandler(btnSalv_Click);
 
             // pctOceanul
             this.pctOceanul.Location = new System.Drawing.Point(0, 0);
@@ -582,7 +583,20 @@ namespace Interferente_Eco.Panels
             this.timer.Enabled = false;
         }
         private int ct = 0;
-      
+        private void btnSalv_Click(object sender, EventArgs e)
+        {
+
+            Bitmap imagine = new Bitmap(pctOceanul.Width, pctOceanul.Height, PixelFormat.Format24bppRgb);
+
+            pctOceanul.DrawToBitmap(imagine, pctOceanul.ClientRectangle);
+
+            imagine.Save("C:/Mycode/CSHARP/Apps/Interferente-Eco/Interferente-Eco/Poze salvate/imagine"+ct+".jpg", ImageFormat.Jpeg);
+
+            imagine.Dispose();
+            ct++;
+            MessageBox.Show("Imaginea a fost salvată cu succes!");
+
+        }
 
     }
 }
