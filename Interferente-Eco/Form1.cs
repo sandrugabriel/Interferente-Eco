@@ -14,12 +14,15 @@ namespace Interferente_Eco
 {
     public partial class Form1 : Form
     {
+        public PnlInterferente pnlInterferente;
+        int dx1, dy1;
         public Form1()
         {
             InitializeComponent();
-            Utilizator utilizator = new Utilizator("1 Ioana eco");
-            Image image = Image.FromFile(Application.StartupPath+ @"\Background\Back2.jpg");
-            this.Controls.Add(new PnlInterferente(this,utilizator,image));
+            Utilizator utilizator3 = new Utilizator("1 Ioana eco");
+            Image image4 = Image.FromFile(Application.StartupPath+ @"\Background\Back2.jpg");
+            pnlInterferente = new PnlInterferente(this, utilizator3, image4);
+            this.Controls.Add(pnlInterferente);
 
         }
 
@@ -39,6 +42,46 @@ namespace Interferente_Eco
             }
 
             this.Controls.Remove(control);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+                this.KeyPreview = true;
+                pnlInterferente.Focus();
+
+            dx1 = pnlInterferente.dx;
+            dy1 = pnlInterferente.dy;
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    //MessageBox.Show("sdf");
+                    pnlInterferente.dx = -1;
+                    pnlInterferente.dy = 0;
+                    break;
+                case Keys.Right:
+                    pnlInterferente.dx = 1;
+                    pnlInterferente.dy = 0;
+                    break;
+                case Keys.Up:
+                    pnlInterferente.dx = 0;
+                    pnlInterferente.dy = -1;
+                    break;
+                case Keys.Down:
+                    pnlInterferente.dx = 0;
+                    pnlInterferente.dy = 1;
+                    break;
+            }
+
+          // pnlInterferente.pctOceanul.MouseDown -= pnlInterferente.pctOceanul_MouseDown;
+            pnlInterferente.timer.Enabled = true;
+            pnlInterferente.pctBackground.Enabled = false;
+            pnlInterferente.btnStop.Visible = true;
         }
     }
 }
