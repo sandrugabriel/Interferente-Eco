@@ -2,15 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Interferente_Eco.Panels
 {
-    internal class PnlInterferente:Panel
+    internal class PnlInterferente : Panel
     {
 
         Form1 form;
@@ -38,6 +40,8 @@ namespace Interferente_Eco.Panels
         private int ctPlastic;
         private int ctHartie;
 
+        PictureBox pctRobot;
+
         public PnlInterferente(Form1 form1, Utilizator utilizator1, Image image1)
         {
 
@@ -49,6 +53,7 @@ namespace Interferente_Eco.Panels
             this.form.MinimumSize = new System.Drawing.Size(1113, 828);
             this.form.MaximumSize = new System.Drawing.Size(1113, 828);
             ctSticla = 0;
+            pctRobot = new PictureBox();
             ctPlastic = 0;
             ctHartie = 0;
             index = 1;
@@ -119,7 +124,7 @@ namespace Interferente_Eco.Panels
             this.lblDeflector.Name = "lblDeflector";
             this.lblDeflector.Size = new System.Drawing.Size(172, 27);
             this.lblDeflector.Text = "Adauga Deflector";
-            this.lblDeflector.Click += new EventHandler(lblDeflector_Click); 
+            this.lblDeflector.Click += new EventHandler(lblDeflector_Click);
             this.lblDeflector.BackColor = System.Drawing.Color.SaddleBrown;
 
             // btnRoteste
@@ -140,7 +145,7 @@ namespace Interferente_Eco.Panels
             this.btnCuratat.Name = "btnCuratat";
             this.btnCuratat.Size = new System.Drawing.Size(179, 63);
             this.btnCuratat.Text = "Curata tot";
-             
+
             // lblSticla
             this.lblSticla.AutoSize = true;
             this.lblSticla.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 12F, System.Drawing.FontStyle.Regular);
@@ -158,7 +163,7 @@ namespace Interferente_Eco.Panels
             this.lblHartie.Name = "lblHartie";
             this.lblHartie.Size = new System.Drawing.Size(71, 27);
             this.lblHartie.Text = "Hartie: " + ctHartie.ToString();
-             
+
             // lblPlastic
             this.lblPlastic.AutoSize = true;
             this.lblPlastic.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 12F, System.Drawing.FontStyle.Regular);
@@ -176,6 +181,7 @@ namespace Interferente_Eco.Panels
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(179, 63);
             this.btnStart.Text = "Start";
+            this.btnStart.Click += new EventHandler(btnStart_Click);
 
             // btnRestart
             this.btnRestart.BackColor = System.Drawing.Color.SaddleBrown;
@@ -185,7 +191,7 @@ namespace Interferente_Eco.Panels
             this.btnRestart.Name = "btnRestart";
             this.btnRestart.Size = new System.Drawing.Size(179, 63);
             this.btnRestart.Text = "Restart";
-             
+
             // btnSalv
             this.btnSalv.BackColor = System.Drawing.Color.SaddleBrown;
             this.btnSalv.Font = new System.Drawing.Font("Microsoft YaHei UI Light", 12F, System.Drawing.FontStyle.Regular);
@@ -194,7 +200,7 @@ namespace Interferente_Eco.Panels
             this.btnSalv.Name = "btnSalv";
             this.btnSalv.Size = new System.Drawing.Size(179, 63);
             this.btnSalv.Text = "Salveaza jpg";
-             
+
             // pctOceanul
             this.pctOceanul.Location = new System.Drawing.Point(0, 0);
             this.pctOceanul.Name = "pctOceanul";
@@ -216,7 +222,7 @@ namespace Interferente_Eco.Panels
             }
             else
             {
-                pctOceanul.Paint -= pctOceanul_Paint; 
+                pctOceanul.Paint -= pctOceanul_Paint;
                 pctOceanul.Refresh();
             }
         }
@@ -224,25 +230,25 @@ namespace Interferente_Eco.Panels
         private void pctOceanul_Paint(object sender, PaintEventArgs e)
         {
 
-                PictureBox pictureBox = (PictureBox)sender;
-                Graphics graphics = e.Graphics;
+            PictureBox pictureBox = (PictureBox)sender;
+            Graphics graphics = e.Graphics;
 
-                Pen gridPen = new Pen(Color.White, 2);
+            Pen gridPen = new Pen(Color.White, 2);
 
-                int cellSize = 60;
+            int cellSize = 60;
 
-                for (int x = 0; x < pictureBox.Width; x += cellSize)
-                {
-                    graphics.DrawLine(gridPen, x, 0, x, pictureBox.Height);
-                }
+            for (int x = 0; x < pictureBox.Width; x += cellSize)
+            {
+                graphics.DrawLine(gridPen, x, 0, x, pictureBox.Height);
+            }
 
-                for (int y = 0; y < pictureBox.Height; y += cellSize)
-                {
-                    graphics.DrawLine(gridPen, 0, y, pictureBox.Width, y);
-                }
+            for (int y = 0; y < pictureBox.Height; y += cellSize)
+            {
+                graphics.DrawLine(gridPen, 0, y, pictureBox.Width, y);
+            }
 
-           
-           
+
+
         }
 
         private void btnRoteste_Click(object sender, EventArgs e)
@@ -290,8 +296,37 @@ namespace Interferente_Eco.Panels
             }
         }
 
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            string fisier = Application.StartupPath + @"\data\Harta1.txt";
+            string[] linii = File.ReadAllLines(fisier);
+
+            foreach (string linie in linii)
+            {
+                string[] date = linie.Split(' ');
+
+                string caleImagine = date[0];
+                int x = int.Parse(date[1]);
+                int y = int.Parse(date[2]);
+
+                int absoluteX = x * 60 - 60;
+                int absoluteY = y * 60 - 60;
+
+                PictureBox pictureBox = new PictureBox();
+                pictureBox.Image = Image.FromFile(Application.StartupPath+@"/Produse/" + caleImagine + ".png");
+                pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox.Name = caleImagine;
+                pictureBox.Size = new Size(60, 60);
+                pictureBox.Location = new Point(absoluteX, absoluteY);
+
+                pctOceanul.Controls.Add(pictureBox);
+
+                pctRobot = pctOceanul.Controls.Find("Robot", true).FirstOrDefault() as PictureBox;
+
+            }
 
 
+        }
 
     }
 }
