@@ -191,6 +191,7 @@ namespace Interferente_Eco.Panels
             this.btnRestart.Name = "btnRestart";
             this.btnRestart.Size = new System.Drawing.Size(179, 63);
             this.btnRestart.Text = "Restart";
+            this.btnRestart.Click += new EventHandler(btnRestart_Click);
 
             // btnSalv
             this.btnSalv.BackColor = System.Drawing.Color.SaddleBrown;
@@ -325,6 +326,14 @@ namespace Interferente_Eco.Panels
 
             }
 
+
+        }
+        
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+
+            this.form.removePnl("PnlInterferente");
+            this.form.Controls.Add(new PnlInterferente(form, utilizator, image));
 
         }
 
